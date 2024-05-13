@@ -1,34 +1,41 @@
 const express = require("express");
 const studentsController = require("../../controllers/students");
-const { validateBody, isValidId } = require("../../middlewares");
+const { validateBody, isValidId, authenticate } = require("../../middlewares");
 const schemas = require("../../schemas/student");
 
 const router = express.Router();
 
-router.get("/", studentsController.getStudentsList);
+router.get("/", authenticate, studentsController.getStudentsList);
 
-router.get("/:id", isValidId, studentsController.getStudentById);
+router.get("/:id", authenticate, isValidId, studentsController.getStudentById);
 
 router.post(
   "/",
+  authenticate,
   validateBody(schemas.studentSchema),
   studentsController.addStudent
 );
 
 router.put(
   "/:id",
+  authenticate,
   isValidId,
   validateBody(schemas.studentSchema),
   studentsController.updateStudentById
 );
 
-router.patch(
-  "/:id/gender",
-  isValidId,
-  validateBody(schemas.updateGenderSchema),
-  studentsController.updateStudentGender
-);
+// router.patch(
+//   "/:id/gender",
+//   isValidId,
+//   validateBody(schemas.updateGenderSchema),
+//   studentsController.updateStudentGender
+// );
 
-router.delete("/:id", isValidId, studentsController.deleteStudentById);
+router.delete(
+  "/:id",
+  authenticate,
+  isValidId,
+  studentsController.deleteStudentById
+);
 
 module.exports = router;

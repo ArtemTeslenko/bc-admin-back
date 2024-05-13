@@ -2,7 +2,9 @@ const Student = require("../models/student");
 const { HttpError, controllerWrapper } = require("../helpers");
 
 const getStudentsList = async (req, res) => {
-  const result = await Student.find();
+  const { page = 1, limit = 10 } = req.query;
+  const skip = (page - 1) * limit;
+  const result = await Student.find({ skip, limit });
 
   res.json(result);
 };
@@ -35,16 +37,16 @@ const updateStudentById = async (req, res) => {
   res.json(result);
 };
 
-const updateStudentGender = async (req, res) => {
-  const { id } = req.params;
-  const result = await Student.findByIdAndUpdate(id, req.body, { new: true });
+// const updateStudentGender = async (req, res) => {
+//   const { id } = req.params;
+//   const result = await Student.findByIdAndUpdate(id, req.body, { new: true });
 
-  if (!result) {
-    throw HttpError(404, "Not found");
-  }
+//   if (!result) {
+//     throw HttpError(404, "Not found");
+//   }
 
-  res.json(result);
-};
+//   res.json(result);
+// };
 
 const deleteStudentById = async (req, res) => {
   const { id } = req.params;
@@ -63,6 +65,6 @@ module.exports = {
   getStudentById: controllerWrapper(getStudentById),
   addStudent: controllerWrapper(addStudent),
   updateStudentById: controllerWrapper(updateStudentById),
-  updateStudentGender: controllerWrapper(updateStudentGender),
+  // updateStudentGender: controllerWrapper(updateStudentGender),
   deleteStudentById: controllerWrapper(deleteStudentById),
 };
