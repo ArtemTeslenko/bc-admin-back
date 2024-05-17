@@ -3,33 +3,49 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 const { HttpError, controllerWrapper } = require("../helpers");
 
-const { SECRET_KEY } = process.env;
+const { SECRET_KEY, ENTRANCE_KEY } = process.env;
 
 const register = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, key } = req.body;
   const user = await User.findOne({ email });
 
   if (user) {
     throw HttpError(409, "Email already in use");
   }
 
+  if (key !== ENTRANCE_KEY) {
+    throw HttpError(403);
+  }
+
   const hashPassword = await bcrypt.hash(password, 10);
 
   const newUser = await User.create({ ...req.body, password: hashPassword });
+  const currentUser = await User.findOne({ email: newUser.email });
+  const payload = {
+    id: currentUser._id,
+  };
+  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "7h" });
+
+  await User.findByIdAndUpdate(currentUser._id, { token });
 
   res.status(201).json({
-    name: newUser.name,
-    email: newUser.email,
+    name: currentUser.name,
+    email: currentUser.email,
+    token,
   });
 };
 
 const login = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, key } = req.body;
 
   const user = await User.findOne({ email });
 
   if (!user) {
     throw HttpError(401, "Email or password invalid");
+  }
+
+  if (key !== ENTRANCE_KEY) {
+    throw HttpError(403);
   }
 
   const passwordCompare = await bcrypt.compare(password, user.password);
