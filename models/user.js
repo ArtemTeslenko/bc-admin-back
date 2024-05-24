@@ -2,6 +2,7 @@ const { Schema, model, Types } = require("mongoose");
 const { handleMongooseError } = require("../helpers");
 
 const emailRegexp = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+const validateRole = ["super-admin", "admin", "user"];
 
 const userSchema = new Schema(
   {
@@ -20,13 +21,14 @@ const userSchema = new Schema(
       minlength: 6,
       required: true,
     },
-    key: {
-      type: String,
-      required: true,
-    },
     token: {
       type: String,
       default: "",
+    },
+    role: {
+      type: String,
+      enum: validateRole,
+      default: "user",
     },
   },
   { versionKey: false, timestamps: true }

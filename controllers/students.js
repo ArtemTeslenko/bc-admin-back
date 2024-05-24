@@ -37,17 +37,6 @@ const updateStudentById = async (req, res) => {
   res.json(result);
 };
 
-// const updateStudentGender = async (req, res) => {
-//   const { id } = req.params;
-//   const result = await Student.findByIdAndUpdate(id, req.body, { new: true });
-
-//   if (!result) {
-//     throw HttpError(404, "Not found");
-//   }
-
-//   res.json(result);
-// };
-
 const deleteStudentById = async (req, res) => {
   const { id } = req.params;
   const result = await Student.findByIdAndDelete(id);
@@ -65,6 +54,5 @@ module.exports = {
   getStudentById: controllerWrapper(getStudentById),
   addStudent: controllerWrapper(addStudent),
   updateStudentById: controllerWrapper(updateStudentById),
-  // updateStudentGender: controllerWrapper(updateStudentGender),
   deleteStudentById: controllerWrapper(deleteStudentById),
 };

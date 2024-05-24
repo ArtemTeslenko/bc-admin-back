@@ -18,8 +18,10 @@ const register = async (req, res) => {
   }
 
   const hashPassword = await bcrypt.hash(password, 10);
+  const userObject = { ...req.body };
+  delete userObject.key;
 
-  const newUser = await User.create({ ...req.body, password: hashPassword });
+  const newUser = await User.create({ ...userObject, password: hashPassword });
   const currentUser = await User.findOne({ email: newUser.email });
   const payload = {
     id: currentUser._id,

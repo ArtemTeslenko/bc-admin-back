@@ -24,13 +24,6 @@ router.put(
   studentsController.updateStudentById
 );
 
-// router.patch(
-//   "/:id/gender",
-//   isValidId,
-//   validateBody(schemas.updateGenderSchema),
-//   studentsController.updateStudentGender
-// );
-
 router.delete(
   "/:id",
   authenticate,
