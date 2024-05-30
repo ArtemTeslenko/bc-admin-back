@@ -18,7 +18,7 @@ const loginSchema = Joi.object({
 });
 
 const updateRoleSchema = Joi.object({
-  role: Joi.string().valid(...validateRole),
+  role: Joi.array().items(Joi.string().valid(...validateRole)),
 });
 
 module.exports = {

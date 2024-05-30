@@ -12,7 +12,7 @@ const isValidRole = async (req, res, next) => {
   const { id } = jwt.verify(token, SECRET_KEY);
   const user = await User.findById(id);
 
-  if (!user.role || user.role !== "super-admin") {
+  if (!user.role || !user.role.length || !user.role.includes("super-admin")) {
     next(HttpError(403));
   }
   next();

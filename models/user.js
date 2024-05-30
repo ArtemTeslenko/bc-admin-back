@@ -25,11 +25,13 @@ const userSchema = new Schema(
       type: String,
       default: "",
     },
-    role: {
-      type: String,
-      enum: validateRole,
-      default: "user",
-    },
+    role: [
+      {
+        type: String,
+        enum: validateRole,
+        default: "user",
+      },
+    ],
   },
   { versionKey: false, timestamps: true }
 );
