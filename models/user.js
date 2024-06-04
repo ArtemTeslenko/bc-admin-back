@@ -1,4 +1,4 @@
-const { Schema, model, Types } = require("mongoose");
+const { Schema, model } = require("mongoose");
 const { handleMongooseError } = require("../helpers");
 
 const emailRegexp = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -29,7 +29,7 @@ const userSchema = new Schema(
       {
         type: String,
         enum: validateRole,
-        default: "user",
+        default: ["user"],
       },
     ],
   },

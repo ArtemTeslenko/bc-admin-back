@@ -7,9 +7,13 @@ const getUsersList = async (req, res) => {
   const result = await User.find(
     { skip, limit },
     { token: false, password: false }
-  );
+  )
+    .limit(limit)
+    .skip(skip);
 
-  res.json(result);
+  const totalItems = await User.find().countDocuments();
+
+  res.json({ data: result, totalItems, itemsPerPage: limit, page });
 };
 
 const getUserById = async (req, res) => {

@@ -21,7 +21,11 @@ const register = async (req, res) => {
   const userObject = { ...req.body };
   delete userObject.key;
 
-  const newUser = await User.create({ ...userObject, password: hashPassword });
+  const newUser = await User.create({
+    ...userObject,
+    password: hashPassword,
+    role: ["user"],
+  });
   const currentUser = await User.findOne({ email: newUser.email });
   const payload = {
     id: currentUser._id,
