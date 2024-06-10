@@ -2,18 +2,29 @@ const User = require("../models/user");
 const { HttpError, controllerWrapper } = require("../helpers");
 
 const getUsersList = async (req, res) => {
-  const { page = 1, limit = 10 } = req.query;
+  const { page = 1, limit = 10, name, email } = req.query;
+  const roles = req.query.role;
   const skip = (page - 1) * limit;
-  const result = await User.find(
-    { skip, limit },
-    { token: false, password: false }
-  )
-    .limit(limit)
-    .skip(skip);
 
-  const totalItems = await User.find().countDocuments();
+  const query = {};
 
-  res.json({ data: result, totalItems, itemsPerPage: limit, page });
+  if (roles) {
+    query.role = { $in: Array.isArray(roles) ? roles : [roles] };
+  }
+  if (name) {
+    query.name = { $regex: name, $options: "i" };
+  }
+  if (email) {
+    query.email = { $regex: email };
+  }
+
+  const totalItems = await User.countDocuments(query);
+  const result = await User.find(query)
+    .select("-token -password")
+    .limit(Number(limit))
+    .skip(Number(skip));
+
+  res.json({ data: result, totalItems, itemsPerPage: result.length, page });
 };
 
 const getUserById = async (req, res) => {
