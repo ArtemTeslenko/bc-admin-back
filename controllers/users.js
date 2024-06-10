@@ -19,12 +19,19 @@ const getUsersList = async (req, res) => {
   }
 
   const totalItems = await User.countDocuments(query);
+  const totalPages = Math.ceil(totalItems / limit);
   const result = await User.find(query)
     .select("-token -password")
     .limit(Number(limit))
     .skip(Number(skip));
 
-  res.json({ data: result, totalItems, itemsPerPage: result.length, page });
+  res.json({
+    data: result,
+    totalItems,
+    totalPages,
+    itemsPerPage: result.length,
+    page,
+  });
 };
 
 const getUserById = async (req, res) => {
