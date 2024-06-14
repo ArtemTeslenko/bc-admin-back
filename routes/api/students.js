@@ -16,6 +16,8 @@ router.post(
   studentsController.addStudent
 );
 
+router.post("/bc-client/", studentsController.addStudent);
+
 router.put(
   "/:id",
   authenticate,
