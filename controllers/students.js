@@ -21,7 +21,7 @@ const getStudentById = async (req, res) => {
 };
 
 const addStudent = async (req, res) => {
-  const result = await Student.create(req.body);
+  const result = await Student.create({ ...req.headers, ...req.body });
 
   res.status(201).json(result);
 };
