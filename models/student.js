@@ -6,42 +6,6 @@ const { handleMongooseError } = require("../helpers");
 
 const studentSchema = new Schema(
   {
-    pageId: {
-      type: Number,
-    },
-    field2224355: {
-      type: String,
-    },
-    field2224356: {
-      type: String,
-    },
-    field2224357: {
-      type: Number,
-    },
-    field2224358: {
-      type: String,
-    },
-    field2224359: {
-      type: String,
-    },
-    field2224360: {
-      type: String,
-    },
-    field2224363: {
-      type: String,
-    },
-    field2224364: {
-      type: String,
-    },
-    field2224365: {
-      type: String,
-    },
-    field2224366: {
-      type: String,
-    },
-    field2224369: {
-      type: String,
-    },
     // name: {
     //   type: String,
     //   required: true,
@@ -216,7 +180,12 @@ const studentSchema = new Schema(
     //   },
     // },
   },
-  { toJSON: { getters: true }, versionKey: false, timestamps: true }
+  {
+    strict: false,
+    toJSON: { getters: true },
+    versionKey: false,
+    timestamps: true,
+  }
 );
 
 studentSchema.post("save", handleMongooseError);
