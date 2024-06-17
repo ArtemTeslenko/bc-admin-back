@@ -6,6 +6,7 @@ require("dotenv").config();
 const authRouter = require("./routes/api/auth");
 const studentsRouter = require("./routes/api/students");
 const usersRouter = require("./routes/api/users");
+const emailRouter = require("./routes/api/email");
 
 const app = express();
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use("/api/auth", authRouter);
 app.use("/api/students", studentsRouter);
 app.use("/api/users", usersRouter);
+app.use("/api/email", emailRouter);
 
 app.use((req, res) => {
   res.status(404).json({ message: "Not found" });

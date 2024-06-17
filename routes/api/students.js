@@ -12,11 +12,11 @@ router.get("/:id", authenticate, isValidId, studentsController.getStudentById);
 router.post(
   "/",
   authenticate,
-  validateBody(schemas.studentSchema),
+  // validateBody(schemas.studentSchema),
   studentsController.addStudent
 );
 
-router.post("/bc-client/", studentsController.addStudent);
+router.post("/bc-client/:location", studentsController.addStudent);
 
 router.put(
   "/:id",

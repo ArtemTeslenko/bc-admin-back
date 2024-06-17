@@ -2,11 +2,28 @@ const Student = require("../models/student");
 const { HttpError, controllerWrapper } = require("../helpers");
 
 const getStudentsList = async (req, res) => {
-  const { page = 1, limit = 10 } = req.query;
+  const { page = 1, limit = 10, location } = req.query;
   const skip = (page - 1) * limit;
-  const result = await Student.find({ skip, limit });
 
-  res.json(result);
+  const query = {};
+
+  if (location) {
+    query.location = { $regex: location };
+  }
+
+  const totalItems = await Student.countDocuments(query);
+  const totalPages = Math.ceil(totalItems / limit);
+  const result = await Student.find(query)
+    .limit(Number(limit))
+    .skip(Number(skip));
+
+  res.json({
+    data: result,
+    totalItems,
+    totalPages,
+    itemsPerPage: result.length,
+    page,
+  });
 };
 
 const getStudentById = async (req, res) => {
@@ -21,7 +38,8 @@ const getStudentById = async (req, res) => {
 };
 
 const addStudent = async (req, res) => {
-  const result = await Student.create({ ...req.headers, ...req.body });
+  const { location = "default" } = req.params;
+  const result = await Student.create({ location, ...req.body });
 
   res.status(201).json(result);
 };
@@ -45,7 +63,6 @@ const deleteStudentById = async (req, res) => {
     throw HttpError(404, "Not found");
   }
 
-  // res.status(204).send();
   res.json({ message: "Delete success" });
 };
 
