@@ -32,7 +32,8 @@ const studentSchema = new Schema(
       // match: /^\d{2}-\d{2}-d{4}$/,
     },
     campPeriod: {
-      type: String,
+      type: Map,
+      of: String,
     },
     comments: {
       type: String,
