@@ -39,6 +39,9 @@ const studentSchema = new Schema(
     comments: {
       type: String,
     },
+    country: {
+      type: String,
+    },
   },
   {
     strict: false,
