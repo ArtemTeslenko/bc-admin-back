@@ -3,12 +3,15 @@ const { HttpError, controllerWrapper } = require("../helpers");
 
 const getStudentsList = async (req, res) => {
   const { page = 1, limit = 10, location } = req.query;
+  const locations = req.query.location;
   const skip = (page - 1) * limit;
 
   const query = {};
 
-  if (location) {
-    query.location = { $regex: location };
+  if (locations) {
+    query.location = {
+      $in: Array.isArray(locations) ? locations : [locations],
+    };
   }
 
   const totalItems = await Student.countDocuments(query);
