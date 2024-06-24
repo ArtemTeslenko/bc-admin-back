@@ -29,7 +29,6 @@ const studentSchema = new Schema(
     },
     studentBirthday: {
       type: String,
-      // match: /^\d{2}-\d{2}-d{4}$/,
     },
     campPeriod: {
       type: Map,
