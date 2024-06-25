@@ -18,4 +18,21 @@ const isValidRole = async (req, res, next) => {
   next();
 };
 
-module.exports = isValidRole;
+const isPeriodAvailableRole = async (req, res, next) => {
+  const { authorization = "" } = req.headers;
+
+  const [_, token] = authorization.split(" ");
+
+  const { id } = jwt.verify(token, SECRET_KEY);
+  const user = await User.findById(id);
+
+  const isRoleAvailable =
+    user.role.includes("admin") || user.role.includes("super-admin");
+
+  if (!user.role || !user.role.length || !isRoleAvailable) {
+    next(HttpError(403));
+  }
+  next();
+};
+
+module.exports = { isValidRole, isPeriodAvailableRole };

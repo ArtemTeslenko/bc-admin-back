@@ -7,6 +7,7 @@ const authRouter = require("./routes/api/auth");
 const studentsRouter = require("./routes/api/students");
 const usersRouter = require("./routes/api/users");
 const emailRouter = require("./routes/api/email");
+const periodsRouter = require("./routes/api/periods");
 
 const app = express();
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
@@ -19,6 +20,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/students", studentsRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/email", emailRouter);
+app.use("/api/periods", periodsRouter);
 
 app.use((req, res) => {
   res.status(404).json({ message: "Not found" });
