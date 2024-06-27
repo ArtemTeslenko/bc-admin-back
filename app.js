@@ -12,8 +12,16 @@ const periodsRouter = require("./routes/api/periods");
 const app = express();
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 
+const corsOptions = {
+  origin:
+    app.get("env") === "development"
+      ? "http://localhost:5173"
+      : "https://british-camp-admin.netlify.app",
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+};
+
 app.use(logger(formatsLogger));
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 
 app.use("/api/auth", authRouter);
