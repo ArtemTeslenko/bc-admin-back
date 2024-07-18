@@ -17,6 +17,7 @@ const corsOptions = {
   //   app.get("env") === "development"
   //     ? "http://localhost:5173"
   //     : "https://british-camp-admin.netlify.app",
+  // origin: ["http://localhost:5173", "https://british-camp-admin.netlify.app"],
   origin: "*",
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
 };
