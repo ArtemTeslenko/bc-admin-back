@@ -9,7 +9,7 @@ const nodemailerConfig = {
   port: 465,
   secure: true,
   auth: {
-    user: "artem.working.w126@gmail.com",
+    user: "campbritish@gmail.com",
     pass: APP_PASSWORD,
   },
 };
@@ -20,10 +20,10 @@ const sendEmail = async (req, res) => {
   const transporter = nodemailer.createTransport(nodemailerConfig);
 
   const mailOptions = {
-    from: "artem.working.w126@gmail.com",
+    from: "campbritish@gmail.com",
     to: `${correspondent}`,
     subject: `${emailSubject}`,
-    html: "<h1>Title<h1><p>Some text</p><p>Test from nodemailer</p>",
+    html: "<h1>Title<h1><p>Some text</p>",
     attachments: [
       {
         filename: req.file.originalname,
