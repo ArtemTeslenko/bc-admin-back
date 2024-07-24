@@ -16,14 +16,19 @@ const nodemailerConfig = {
 
 const sendEmail = async (req, res) => {
   const pdfBuffer = req.file.buffer;
-  const { correspondent, emailSubject } = req.body;
+  const { correspondent, emailSubject, emailContent } = req.body;
   const transporter = nodemailer.createTransport(nodemailerConfig);
+
+  const preparedContent = emailContent
+    .split("/n")
+    .map((paragpaph) => "<p>" + paragpaph + "</p>")
+    .join("");
 
   const mailOptions = {
     from: "campbritish@gmail.com",
     to: `${correspondent}`,
     subject: `${emailSubject}`,
-    html: "<h1>Title<h1><p>Some text</p>",
+    html: `${preparedContent}`,
     attachments: [
       {
         filename: req.file.originalname,
