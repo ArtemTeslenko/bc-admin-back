@@ -11,12 +11,7 @@ const {
 
 const router = express.Router();
 
-router.get(
-  "/",
-  authenticate,
-  isPeriodAvailableRole,
-  periodsController.getPeriodsList
-);
+router.get("/", authenticate, periodsController.getPeriodsList);
 
 router.post(
   "/",
