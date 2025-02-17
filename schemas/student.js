@@ -1,23 +1,9 @@
 const Joi = require("joi");
 
-const validateCountry = ["ua", "pl"];
-const validateLocation = [
-  "miska",
-  "girska",
-  "termalna",
-  "ozerna",
-  "london",
-  "richna",
-  "valencia",
-  "queens",
-  "mountain",
-  "sielanka",
-];
+const validateCountry = ["ua", "pl", "en"];
 
 const studentSchema = Joi.object({
-  location: Joi.string()
-    .required()
-    .valid(...validateLocation),
+  locationSlug: Joi.string().required(),
   parentName: Joi.string().required(),
   parentPassport: Joi.string().required(),
   parentTaxpayerNumber: Joi.string().required(),

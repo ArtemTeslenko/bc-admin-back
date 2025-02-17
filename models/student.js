@@ -1,9 +1,9 @@
-const { Schema, model, Types } = require("mongoose");
+const { Schema, model } = require("mongoose");
 const { handleMongooseError } = require("../helpers");
 
 const studentSchema = new Schema(
   {
-    location: {
+    locationSlug: {
       type: String,
     },
     parentName: {

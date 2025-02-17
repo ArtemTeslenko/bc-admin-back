@@ -1,19 +1,18 @@
 const Student = require("../models/student");
+const Location = require("../models/location");
 const { HttpError, controllerWrapper } = require("../helpers");
 
 const getStudentsList = async (req, res) => {
-  const { page = 1, limit = 10, location } = req.query;
-  const locations = req.query.location;
-  const studentName = req.query.studentName;
+  const { page = 1, limit = 10, locationSlug, studentName } = req.query;
   const skip = (page - 1) * limit;
-
   const query = {};
 
-  if (locations) {
-    query.location = {
-      $in: Array.isArray(locations) ? locations : [locations],
+  if (locationSlug) {
+    query.locationSlug = {
+      $in: [].concat(locationSlug),
     };
   }
+
   if (studentName) {
     query.studentName = { $regex: studentName, $options: "i" };
   }
@@ -45,8 +44,15 @@ const getStudentById = async (req, res) => {
 };
 
 const addStudent = async (req, res) => {
-  const { location = "default" } = req.params;
-  const result = await Student.create({ location, ...req.body });
+  const { location: locationSlug = "default" } = req.params;
+
+  const location = await Location.findOne({ slug: locationSlug });
+
+  if (!location) {
+    throw HttpError(400);
+  }
+
+  const result = await Student.create({ locationSlug, ...req.body });
 
   res.status(201).json(result);
 };

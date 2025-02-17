@@ -8,6 +8,7 @@ const studentsRouter = require("./routes/api/students");
 const usersRouter = require("./routes/api/users");
 const emailRouter = require("./routes/api/email");
 const periodsRouter = require("./routes/api/periods");
+const locationsRouter = require("./routes/api/locations");
 
 const app = express();
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
@@ -31,6 +32,7 @@ app.use("/api/students", studentsRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/email", emailRouter);
 app.use("/api/periods", periodsRouter);
+app.use("/api/locations", locationsRouter);
 
 app.use((req, res) => {
   res.status(404).json({ message: "Not found" });
@@ -43,8 +45,6 @@ app.use((err, req, res, next) => {
   }
 
   res.status(err.status).json({ message: err.message });
-  //   const { status = 500, message = "Server error" } = err;
-  //   res.status(status).json({ message });
 });
 
 module.exports = app;

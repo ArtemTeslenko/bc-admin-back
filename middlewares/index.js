@@ -1,7 +1,11 @@
 const validateBody = require("./validateBody");
 const isValidId = require("./isValidId");
 const authenticate = require("./authenticate");
-const { isValidRole, isPeriodAvailableRole } = require("./isValidRole");
+const {
+  isValidRole,
+  isPeriodAvailableRole,
+  isLocationAvailableRole,
+} = require("./isValidRole");
 
 module.exports = {
   validateBody,
@@ -9,4 +13,5 @@ module.exports = {
   authenticate,
   isValidRole,
   isPeriodAvailableRole,
+  isLocationAvailableRole,
 };
