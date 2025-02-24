@@ -9,6 +9,9 @@ const locationSchema = new Schema(
     name: {
       type: String,
     },
+    address: {
+      type: String,
+    },
   },
   {
     strict: false,
