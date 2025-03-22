@@ -44,7 +44,11 @@ const getStudentById = async (req, res) => {
 };
 
 const addStudent = async (req, res) => {
-  const { location: locationSlug = "default" } = req.params;
+  let { location: locationSlug } = req.params;
+
+  if (!locationSlug && req.body.locationSlug) {
+    locationSlug = req.body.locationSlug;
+  }
 
   const location = await Location.findOne({ slug: locationSlug });
 
