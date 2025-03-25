@@ -10,12 +10,7 @@ const schemas = require("../../schemas/location");
 
 const router = express.Router();
 
-router.get(
-  "/",
-  authenticate,
-  isLocationAvailableRole,
-  locationsController.getLocationsList
-);
+router.get("/", authenticate, locationsController.getLocationsList);
 
 router.get(
   "/:id",
