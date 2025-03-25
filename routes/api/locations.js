@@ -15,7 +15,6 @@ router.get("/", authenticate, locationsController.getLocationsList);
 router.get(
   "/:id",
   authenticate,
-  isLocationAvailableRole,
   isValidId,
   locationsController.getLocationById
 );
