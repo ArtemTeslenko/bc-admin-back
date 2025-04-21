@@ -40,6 +40,9 @@ const studentSchema = new Schema(
     country: {
       type: String,
     },
+    agreementDate: {
+      type: Date,
+    },
   },
   {
     strict: false,

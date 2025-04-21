@@ -17,6 +17,7 @@ const studentSchema = Joi.object({
   country: Joi.string()
     .required()
     .valid(...validateCountry),
+  agreementDate: Joi.date().iso(),
 });
 
 module.exports = {

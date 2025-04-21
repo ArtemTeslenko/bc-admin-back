@@ -56,7 +56,11 @@ const addStudent = async (req, res) => {
     throw HttpError(400);
   }
 
-  const result = await Student.create({ locationSlug, ...req.body });
+  const result = await Student.create({
+    locationSlug,
+    ...req.body,
+    agreementDate: new Date(),
+  });
 
   res.status(201).json(result);
 };
