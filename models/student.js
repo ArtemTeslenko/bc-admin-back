@@ -1,5 +1,6 @@
 const { Schema, model } = require("mongoose");
 const { handleMongooseError } = require("../helpers");
+const studentCampInfo = require("./studentCampInfo");
 
 const studentSchema = new Schema(
   {
@@ -43,6 +44,7 @@ const studentSchema = new Schema(
     agreementDate: {
       type: Date,
     },
+    campbookInfo: studentCampInfo,
   },
   {
     strict: false,

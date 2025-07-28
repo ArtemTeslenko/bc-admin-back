@@ -1,4 +1,5 @@
 const Joi = require("joi");
+const studentCampInfo = require("./studentCampInfo");
 
 const validateCountry = ["ua", "pl", "en"];
 
@@ -18,6 +19,7 @@ const studentSchema = Joi.object({
     .required()
     .valid(...validateCountry),
   agreementDate: Joi.date().iso(),
+  campbookInfo: studentCampInfo,
 });
 
 module.exports = {
