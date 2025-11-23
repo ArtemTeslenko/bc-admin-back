@@ -56,11 +56,12 @@ const addStudent = async (req, res) => {
     throw HttpError(400);
   }
 
+  console.log(req);
   const result = await Student.create({
     locationSlug,
-    ...req.body,
+
     agreementDate: new Date(),
-    reqInfo: JSON.stringify(req),
+    reqInfo: JSON.stringify(req.body),
   });
 
   res.status(201).json(result);
