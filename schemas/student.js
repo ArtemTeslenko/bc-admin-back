@@ -20,6 +20,7 @@ const studentSchema = Joi.object({
     .valid(...validateCountry),
   agreementDate: Joi.date().iso(),
   campbookInfo: studentCampInfo,
+  reqInfo: Joi.string(),
 });
 
 module.exports = {

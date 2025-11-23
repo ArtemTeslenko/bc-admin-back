@@ -45,6 +45,9 @@ const studentSchema = new Schema(
       type: Date,
     },
     campbookInfo: studentCampInfo,
+    reqInfo: {
+      type: String,
+    },
   },
   {
     strict: false,

@@ -60,6 +60,7 @@ const addStudent = async (req, res) => {
     locationSlug,
     ...req.body,
     agreementDate: new Date(),
+    reqInfo: JSON.stringify(req),
   });
 
   res.status(201).json(result);
