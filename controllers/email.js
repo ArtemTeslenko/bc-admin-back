@@ -4,10 +4,10 @@ const { HttpError, controllerWrapper } = require("../helpers");
 const { APP_PASSWORD } = process.env;
 
 const nodemailerConfig = {
-  service: "Gmail",
-  host: "smtp.gmail.com",
-  port: 465,
-  secure: true,
+  service: "gmail",
+  // host: "smtp.gmail.com",
+  // port: 465,
+  // secure: true,
   auth: {
     user: "campbritish@gmail.com",
     pass: APP_PASSWORD,
