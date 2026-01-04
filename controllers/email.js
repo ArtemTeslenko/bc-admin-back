@@ -38,12 +38,9 @@ const sendEmail = async (req, res) => {
     ],
   };
 
-  await transporter.verify();
-
-  const info = await transporter
+  await transporter
     .sendMail(mailOptions)
-    .then((qwe) => {
-      console.log(qwe);
+    .then(() => {
       res.status(200).json({
         message: "Email successfuly sent",
       });
@@ -51,8 +48,6 @@ const sendEmail = async (req, res) => {
     .catch(() => {
       throw HttpError(400, "Did not sent");
     });
-
-  console.log(info);
 };
 
 module.exports = {
