@@ -18,7 +18,6 @@ const sendEmail = async (req, res) => {
   const pdfBuffer = req.file.buffer;
   const { correspondent, emailSubject, emailContent } = req.body;
   const transporter = nodemailer.createTransport(nodemailerConfig);
-  console.log(transporter);
 
   const preparedContent = emailContent
     .split("/n")
@@ -39,10 +38,12 @@ const sendEmail = async (req, res) => {
     ],
   };
 
-  transporter
+  await transporter.verify();
+
+  const info = await transporter
     .sendMail(mailOptions)
-    .then(() => {
-      console.log(res);
+    .then((qwe) => {
+      console.log(qwe);
       res.status(200).json({
         message: "Email successfuly sent",
       });
@@ -50,6 +51,8 @@ const sendEmail = async (req, res) => {
     .catch(() => {
       throw HttpError(400, "Did not sent");
     });
+
+  console.log(info);
 };
 
 module.exports = {
