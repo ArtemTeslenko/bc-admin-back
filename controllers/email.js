@@ -5,9 +5,9 @@ const { APP_PASSWORD } = process.env;
 
 const nodemailerConfig = {
   service: "gmail",
-  // host: "smtp.gmail.com",
-  // port: 465,
-  // secure: true,
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true,
   auth: {
     user: "campbritish@gmail.com",
     pass: APP_PASSWORD,
@@ -18,6 +18,7 @@ const sendEmail = async (req, res) => {
   const pdfBuffer = req.file.buffer;
   const { correspondent, emailSubject, emailContent } = req.body;
   const transporter = nodemailer.createTransport(nodemailerConfig);
+  console.log(transporter);
 
   const preparedContent = emailContent
     .split("/n")
@@ -41,6 +42,7 @@ const sendEmail = async (req, res) => {
   transporter
     .sendMail(mailOptions)
     .then(() => {
+      console.log(res);
       res.status(200).json({
         message: "Email successfuly sent",
       });
